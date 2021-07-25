@@ -1,0 +1,566 @@
+#                             Enforcer  by
+#                             Michael Sinz
+#
+#                         Copyright 1992-1998
+#                         All Rights Reserved
+#
+#############################################################################
+#                                                                           #
+# Permission is hereby granted to distribute the Enforcer archive           #
+# containing the executables and documentation for non-commercial purposes  #
+# so long as the archive and its contents are not modified in any way.      #
+#                                                                           #
+# Enforcer and related tools are not in the public domain.                  #
+#                                                                           #
+# Enforcer and related tools may not be distributed for a profit.           #
+#                                                                           #
+#############################################################################
+#
+# SMakefile for Enforcer
+#
+
+#
+# Server directory for the data...
+#
+FILENOTE = "Copyright © 1992-1998 - Michael Sinz"
+VERSION = 37
+
+#
+# Name of the module
+#
+MODNAME	= Enforcer
+MODNAME1= LawBreaker
+MODNAME2= Move4K
+MODNAME3= SegTracker
+MODNAME4= FindHit
+MODNAME5= RebootOff
+MODNAME6= MMU
+
+#
+# The ".LD" file we want to produce.
+#
+LD_FILE		= $(MODNAME).ld
+LD_STRIP	= $(MODNAME)
+
+LD1_FILE	= $(MODNAME1).ld
+LD1_STRIP	= $(MODNAME1)
+
+LD2_FILE	= $(MODNAME2).ld
+LD2_STRIP	= $(MODNAME2)
+
+LD3_FILE	= $(MODNAME3).ld
+LD3_STRIP	= $(MODNAME3)
+
+LD4_FILE	= $(MODNAME4).ld
+LD4_STRIP	= $(MODNAME4)
+
+LD5_FILE	= $(MODNAME5).ld
+LD5_STRIP	= $(MODNAME5)
+
+LD6_FILE	= $(MODNAME6).ld
+LD6_STRIP	= $(MODNAME6)
+
+LD_ALL		= $(LD_STRIP)	$(LD1_STRIP)	$(LD2_STRIP)	$(LD3_STRIP)	$(LD4_STRIP)	$(LD5_STRIP)	$(LD6_STRIP)
+
+all: $(LD_ALL)
+
+#
+# Compiler, assembler, and linker
+#
+CC = sc
+AS = hx68 -a
+LN = slink
+LN1= blink
+
+#
+# Compiler flags...
+#
+CFLAGS = IGNORE=306 MEMORYSIZE=HUGE DATA=FARONLY PARAMETERS=REGISTER NOSTACKCHECK NOMULTIPLEINCLUDES STRINGMERGE STRUCTUREEQUIVALENCE MULTIPLECHARACTERCONSTANTS DEBUG=LINE NOVERSION OPTIMIZE OPTIMIZERINLINE OPTIMIZERINLOCAL NOICONS
+
+#
+# Assembler flags...  NOTE how they are used below...
+#
+AFLAGS	= -csq -i include: -o
+
+#
+# Linker flags
+#
+LFLAGS		= SMALLCODE SMALLDATA MAP $(MODNAME).map HLSXF PLAIN SWIDTH 16 NOICONS QUIET
+LFLAGS1		= SMALLCODE SMALLDATA MAP $(MODNAME1).map HLSXF PLAIN SWIDTH 16 NOICONS QUIET
+LFLAGS2		= SMALLCODE SMALLDATA MAP $(MODNAME2).map HLSXF PLAIN SWIDTH 16 NOICONS QUIET
+LFLAGS3		= SMALLCODE SMALLDATA MAP $(MODNAME3).map HLSXF PLAIN SWIDTH 16 NOICONS QUIET
+LFLAGS4		= SMALLCODE SMALLDATA MAP $(MODNAME4).map HLSXF PLAIN SWIDTH 16 NOICONS QUIET
+LFLAGS5		= SMALLCODE SMALLDATA MAP $(MODNAME5).map HLSXF PLAIN SWIDTH 16 NOICONS QUIET
+LFLAGS6		= SMALLCODE SMALLDATA MAP $(MODNAME5).map HLSXF PLAIN SWIDTH 16 NOICONS QUIET
+LFLAGS_STRIP	= ND NOICONS
+
+#
+# System libraries
+#
+LIBS= LIB:amiga.lib
+
+#
+# My headers...
+#
+MY_HDR	=
+
+#
+# My C source...
+#
+MY_C	=	Enforcer.c	SegTracker.c	FindHit.c	MMU.c
+
+#
+# My Assebly source...
+#
+MY_A	=	Handler.asm LawBreaker.asm Move4K.asm SegTrackerPatch.asm RebootOff.asm MMU_Handler.asm
+
+#
+# My object files...
+#
+MY_OBJS	=	Enforcer.o Handler.o
+MY_OBJS1=	LawBreaker.o
+MY_OBJS2=	Move4K.o
+MY_OBJS3=	SegTracker.o SegTrackerPatch.o
+MY_OBJS4=	FindHit.o
+MY_OBJS5=	RebootOff.o
+MY_OBJS6=	MMU.o MMU_Handler.o
+
+#
+# My library files...
+#
+MY_LIBS	=
+
+#
+# Build the stripped LD file...
+#
+$(LD_STRIP):	$(LD_FILE)
+	$(LN1) FROM $(LD_FILE) TO $(LD_STRIP) $(LFLAGS_STRIP)
+	@Filenote $(LD_STRIP) $(FILENOTE) QUIET
+
+# LawBreaker has debugging info in it for example use...
+$(LD1_STRIP):	$(LD1_FILE)
+	$(LN1) FROM $(LD1_FILE) TO $(LD1_STRIP)
+	@Filenote $(LD1_STRIP) $(FILENOTE) QUIET
+	@Protect $(LD1_STRIP) +p
+
+$(LD2_STRIP):	$(LD2_FILE)
+	$(LN1) FROM $(LD2_FILE) TO $(LD2_STRIP) $(LFLAGS_STRIP)
+	@Filenote $(LD2_STRIP) $(FILENOTE) QUIET
+
+$(LD3_STRIP):	$(LD3_FILE)
+	$(LN1) FROM $(LD3_FILE) TO $(LD3_STRIP) $(LFLAGS_STRIP)
+	@Filenote $(LD3_STRIP) $(FILENOTE) QUIET
+
+$(LD4_STRIP):	$(LD4_FILE)
+	$(LN1) FROM $(LD4_FILE) TO $(LD4_STRIP) $(LFLAGS_STRIP)
+	@Filenote $(LD4_STRIP) $(FILENOTE) QUIET
+	@Protect $(LD4_STRIP) +p
+
+$(LD5_STRIP):	$(LD5_FILE)
+	$(LN1) FROM $(LD5_FILE) TO $(LD5_STRIP) $(LFLAGS_STRIP)
+	@Filenote $(LD5_STRIP) $(FILENOTE) QUIET
+
+$(LD6_STRIP):	$(LD6_FILE)
+	$(LN1) FROM $(LD6_FILE) TO $(LD6_STRIP) $(LFLAGS_STRIP)
+	@Filenote $(LD6_STRIP) $(FILENOTE) QUIET
+	@Protect $(LD6_STRIP) +p
+
+#
+# Build the LD file...
+#
+$(LD_FILE):	$(MY_OBJS) $(MY_LIBS)
+	$(LN) <with <
+FROM $(MY_OBJS)
+TO $(LD_FILE)
+LIB $(MY_LIBS) $(LIBS)
+$(LFLAGS)
+<
+
+$(LD1_FILE):	$(MY_OBJS1) $(MY_LIBS)
+	$(LN) <with <
+FROM $(MY_OBJS1)
+TO $(LD1_FILE)
+LIB $(MY_LIBS) $(LIBS)
+$(LFLAGS1)
+<
+
+$(LD2_FILE):	$(MY_OBJS2) $(MY_LIBS)
+	$(LN) <with <
+FROM $(MY_OBJS2)
+TO $(LD2_FILE)
+LIB $(MY_LIBS) $(LIBS)
+$(LFLAGS2)
+<
+
+$(LD3_FILE):	$(MY_OBJS3) $(MY_LIBS)
+	$(LN) <with <
+FROM $(MY_OBJS3)
+TO $(LD3_FILE)
+LIB $(MY_LIBS) $(LIBS)
+$(LFLAGS)
+<
+
+$(LD4_FILE):	$(MY_OBJS4) $(MY_LIBS)
+	$(LN) <with <
+FROM $(MY_OBJS4)
+TO $(LD4_FILE)
+LIB $(MY_LIBS) $(LIBS)
+$(LFLAGS)
+<
+	@Protect $(LD4_FILE) +p
+
+$(LD5_FILE):	$(MY_OBJS5) $(MY_LIBS)
+	$(LN) <with <
+FROM $(MY_OBJS5)
+TO $(LD5_FILE)
+LIB $(MY_LIBS) $(LIBS)
+$(LFLAGS)
+<
+
+$(LD6_FILE):	$(MY_OBJS6) $(MY_LIBS)
+	$(LN) <with <
+FROM $(MY_OBJS6)
+TO $(LD6_FILE)
+LIB $(MY_LIBS) $(LIBS)
+$(LFLAGS)
+<
+
+#
+# Default rules...
+#
+.c.o:
+	$(CC) $(CFLAGS) $*.c
+
+.asm.o:
+	$(AS) $*.asm $(AFLAGS) $*.o
+
+#
+# Specific rules
+#
+Handler.o:	Handler.asm	$(MODNAME)_rev.i
+
+LawBreaker.o:	LawBreaker.asm	$(MODNAME1)_rev.i
+
+Move4K.o:	Move4K.asm	$(MODNAME2)_rev.i
+
+SegTracker.o:	SegTracker.c	$(MODNAME3)_rev.h
+
+FindHit.o:	FindHit.c	$(MODNAME4)_rev.h
+
+RebootOff.o:	RebootOff.asm	$(MODNAME5)_rev.i
+
+MMU_Handler.o:	MMU_Handler.asm	$(MODNAME6)_rev.i
+
+#
+# Bump the version...
+#
+version:
+	@bumprev $(VERSION) $(MODNAME)_rev
+	@bumprev $(VERSION) $(MODNAME1)_rev
+	@bumprev $(VERSION) $(MODNAME2)_rev
+	@bumprev $(VERSION) $(MODNAME3)_rev
+	@bumprev $(VERSION) $(MODNAME4)_rev
+	@bumprev $(VERSION) $(MODNAME5)_rev
+	@bumprev $(VERSION) $(MODNAME6)_rev
+
+$(MODNAME)_rev.i:
+	@bumprev $(VERSION) $(MODNAME)_rev
+
+$(MODNAME1)_rev.i:
+	@bumprev $(VERSION) $(MODNAME1)_rev
+
+$(MODNAME2)_rev.i:
+	@bumprev $(VERSION) $(MODNAME2)_rev
+
+$(MODNAME3)_rev.h:
+	@bumprev $(VERSION) $(MODNAME3)_rev
+
+$(MODNAME4)_rev.h:
+	@bumprev $(VERSION) $(MODNAME4)_rev
+
+$(MODNAME5)_rev.i:
+	@bumprev $(VERSION) $(MODNAME5)_rev
+
+$(MODNAME6)_rev.i:
+	@bumprev $(VERSION) $(MODNAME6)_rev
+
+
+# Build and copy to test location
+test:	$(LD_ALL)
+	@Copy CLONE TO EnforcerTest: $(LD_ALL)
+
+#
+# Release the current build to my system boot disk...
+#
+internal:	doc $(LD_ALL)
+	@Copy CLONE $(LD_STRIP)		SYS:Tools
+	@Copy CLONE $(LD1_STRIP)	SYS:Tools
+	@Copy CLONE $(LD2_STRIP)	SYS:Tools
+	@Copy CLONE $(LD3_STRIP)	SYS:Tools
+	@Copy CLONE $(LD4_STRIP)	SYS:Tools
+	@Copy CLONE $(LD5_STRIP)	SYS:Tools
+	@Copy CLONE $(LD6_STRIP)	SYS:Tools
+	@Delete MySYS:Enforcer/\#? QUIET FORCE
+	@Copy CLONE TO MySYS:Enforcer FROM "LawBreaker.asm"
+	@Copy CLONE TO MySYS:Enforcer FROM "LawBreaker.asm.info"
+	@Copy CLONE TO MySYS:Enforcer FROM "Enforcer.Readme"
+	@Copy CLONE TO MySYS:Enforcer FROM "Enforcer.Readme.info"
+	@Copy CLONE TO MySYS:Enforcer FROM "Move4K"
+	@Copy CLONE TO MySYS:Enforcer FROM "Move4K.info"
+	@Copy CLONE TO MySYS:Enforcer FROM "LawBreaker"
+	@Copy CLONE TO MySYS:Enforcer FROM "LawBreaker.info"
+	@Copy CLONE TO MySYS:Enforcer FROM "Enforcer"
+	@Copy CLONE TO MySYS:Enforcer FROM "Enforcer.info"
+	@Copy CLONE TO MySYS:Enforcer FROM "Enforcer Local.info"
+	@Copy CLONE TO MySYS:Enforcer FROM "Enforcer OFF.info"
+	@Copy CLONE TO MySYS:Enforcer FROM "Enforcer Parallel.info"
+	@Copy CLONE TO MySYS:Enforcer FROM "Enforcer Remote.info"
+	@Copy CLONE TO MySYS:Enforcer FROM "Enforcer_Project.info"
+	@Copy CLONE TO MySYS:Enforcer FROM "Enforcer.doc"
+	@Copy CLONE TO MySYS:Enforcer FROM "Enforcer.doc.info"
+	@Copy CLONE TO MySYS:Enforcer FROM "Enforcer.guide"
+	@Copy CLONE TO MySYS:Enforcer FROM "Enforcer.guide.info"
+	@Copy CLONE TO MySYS:Enforcer FROM "Enforcer.lha"
+	@Copy CLONE TO MySYS:Enforcer FROM "Enforcer.lha.info"
+	@Copy CLONE TO MySYS:Enforcer FROM "SegTracker"
+	@Copy CLONE TO MySYS:Enforcer FROM "SegTracker.info"
+	@Copy CLONE TO MySYS:Enforcer FROM "FindHit"
+	@Copy CLONE TO MySYS:Enforcer FROM "MMU"
+	@Copy CLONE TO MySYS:Enforcer FROM "MMU.info"
+	@Copy CLONE TO MySYS:Enforcer FROM "RebootOff"
+	@Copy CLONE TO MySYS:Enforcer FROM "RebootOff.info"
+
+#
+# Blow away all files that would need to be rebuilt
+#
+clean:
+	@delete \#?.(o|ld|doc|ps|map|map.info|ld.info|o.info)
+
+#
+# Make the AutoDocs
+#
+doc:	$(MODNAME).doc
+
+$(MODNAME).doc:	$(MY_C) $(MY_A)
+	@Echo "Making $(MODNAME).doc"
+	@Join $(MY_C) $(MY_A) as RAM:$(MODNAME).tmp.doc
+	@AutoDoc >$(MODNAME).doc RAM:$(MODNAME).tmp.doc
+	@Delete RAM:$(MODNAME).tmp.doc QUIET
+	@Protect $(MODNAME).doc rwd
+
+#
+# Make a complete new release (This still is in testing...)
+#
+release:
+	make clean
+	make version
+	make internal
+
+#
+# Make the archive for distribution
+#
+arc:	Source.lha Enforcer.lha EnforcerSRC.lha EnforcerBeta.lha Listing.lha Enforcer.UU
+	@List \#?.(lha|uu)
+
+#
+# Make a Source Code disk
+#
+BackupDisk:	Enforcer.lha EnforcerSRC.lha Listing.lha
+	@Format DRIVE DF0: Name "Enforcer Source Backup" NOICONS FFS DIRCACHE
+	@Copy CLONE TO DF0: FROM "Enforcer.Readme"
+	@Copy CLONE TO DF0: FROM "Enforcer.Readme.info"
+	@Copy CLONE TO DF0: FROM "Readme.Source"
+	@Copy CLONE TO DF0: FROM "Readme.Source.info"
+	@Copy CLONE TO DF0: FROM "Enforcer.lha"
+	@Copy CLONE TO DF0: FROM "Enforcer.lha.info"
+	@Copy CLONE TO DF0: FROM "EnforcerSRC.lha"
+	@Copy CLONE TO DF0: FROM "EnforcerSRC.lha.info"
+	@Copy CLONE TO DF0: FROM "Listing.lha"
+	@Copy CLONE TO DF0: FROM "Listing.lha.info"
+	@Copy CLONE TO DF0: FROM "LawBreaker.asm"
+	@Copy CLONE TO DF0: FROM "LawBreaker.asm.info"
+	@Copy CLONE TO DF0: FROM "Move4K"
+	@Copy CLONE TO DF0: FROM "Move4K.info"
+	@Copy CLONE TO DF0: FROM "LawBreaker"
+	@Copy CLONE TO DF0: FROM "LawBreaker.info"
+	@Copy CLONE TO DF0: FROM "Enforcer"
+	@Copy CLONE TO DF0: FROM "Enforcer.info"
+	@Copy CLONE TO DF0: FROM "Enforcer Local.info"
+	@Copy CLONE TO DF0: FROM "Enforcer OFF.info"
+	@Copy CLONE TO DF0: FROM "Enforcer Parallel.info"
+	@Copy CLONE TO DF0: FROM "Enforcer Remote.info"
+	@Copy CLONE TO DF0: FROM "Enforcer_Project.info"
+	@Copy CLONE TO DF0: FROM "Enforcer.doc"
+	@Copy CLONE TO DF0: FROM "Enforcer.doc.info"
+	@Copy CLONE TO DF0: FROM "Enforcer.guide"
+	@Copy CLONE TO DF0: FROM "Enforcer.guide.info"
+	@Copy CLONE TO DF0: FROM "SegTracker"
+	@Copy CLONE TO DF0: FROM "SegTracker.info"
+	@Copy CLONE TO DF0: FROM "FindHit"
+	@Copy CLONE TO DF0: FROM "MMU"
+	@Copy CLONE TO DF0: FROM "MMU.info"
+	@Copy CLONE TO DF0: FROM "RebootOff"
+	@Copy CLONE TO DF0: FROM "RebootOff.info"
+	@Protect DF0:\#? +rwd QUIET
+
+#
+# Make a Source Code disk
+#
+SourceDisk:	Enforcer.lha EnforcerSRC.lha Listing.lha
+	@Format DRIVE DF1: Name "Enforcer Source" NOICONS OFS
+	@Copy CLONE TO DF1: FROM "Enforcer.Readme"
+	@Copy CLONE TO DF1: FROM "Enforcer.Readme.info"
+	@Copy CLONE TO DF1: FROM "Readme.Source"
+	@Copy CLONE TO DF1: FROM "Readme.Source.info"
+	@Copy CLONE TO DF1: FROM "Enforcer.lha"
+	@Copy CLONE TO DF1: FROM "Enforcer.lha.info"
+	@Copy CLONE TO DF1: FROM "EnforcerSRC.lha"
+	@Copy CLONE TO DF1: FROM "EnforcerSRC.lha.info"
+	@Copy CLONE TO DF1: FROM "Listing.lha"
+	@Copy CLONE TO DF1: FROM "Listing.lha.info"
+	@Copy CLONE TO DF1: FROM "LawBreaker.asm"
+	@Copy CLONE TO DF1: FROM "LawBreaker.asm.info"
+	@Copy CLONE TO DF1: FROM "Move4K"
+	@Copy CLONE TO DF1: FROM "Move4K.info"
+	@Copy CLONE TO DF1: FROM "LawBreaker"
+	@Copy CLONE TO DF1: FROM "LawBreaker.info"
+	@Copy CLONE TO DF1: FROM "Enforcer"
+	@Copy CLONE TO DF1: FROM "Enforcer.info"
+	@Copy CLONE TO DF1: FROM "Enforcer Local.info"
+	@Copy CLONE TO DF1: FROM "Enforcer OFF.info"
+	@Copy CLONE TO DF1: FROM "Enforcer Parallel.info"
+	@Copy CLONE TO DF1: FROM "Enforcer Remote.info"
+	@Copy CLONE TO DF1: FROM "Enforcer_Project.info"
+	@Copy CLONE TO DF1: FROM "Enforcer.doc"
+	@Copy CLONE TO DF1: FROM "Enforcer.doc.info"
+	@Copy CLONE TO DF1: FROM "Enforcer.guide"
+	@Copy CLONE TO DF1: FROM "Enforcer.guide.info"
+	@Copy CLONE TO DF1: FROM "SegTracker"
+	@Copy CLONE TO DF1: FROM "SegTracker.info"
+	@Copy CLONE TO DF1: FROM "FindHit"
+	@Copy CLONE TO DF1: FROM "MMU"
+	@Copy CLONE TO DF1: FROM "MMU.info"
+	@Copy CLONE TO DF1: FROM "RebootOff"
+	@Copy CLONE TO DF1: FROM "RebootOff.info"
+	@Protect DF1:\#? +rwd QUIET
+
+#
+# Normal product disk
+#
+Disk:	Enforcer.lha
+	@Format DRIVE DF1: Name "Enforcer" NOICONS OFS DIRCACHE
+	@Copy CLONE TO DF1: FROM "Enforcer.Readme"
+	@Copy CLONE TO DF1: FROM "Enforcer.Readme.info"
+	@Copy CLONE TO DF1: FROM "Readme.Source"
+	@Copy CLONE TO DF1: FROM "Readme.Source.info"
+	@Copy CLONE TO DF1: FROM "Enforcer.lha"
+	@Copy CLONE TO DF1: FROM "Enforcer.lha.info"
+	@Copy CLONE TO DF1: FROM "LawBreaker.asm"
+	@Copy CLONE TO DF1: FROM "LawBreaker.asm.info"
+	@Copy CLONE TO DF1: FROM "Move4K"
+	@Copy CLONE TO DF1: FROM "Move4K.info"
+	@Copy CLONE TO DF1: FROM "LawBreaker"
+	@Copy CLONE TO DF1: FROM "LawBreaker.info"
+	@Copy CLONE TO DF1: FROM "Enforcer"
+	@Copy CLONE TO DF1: FROM "Enforcer.info"
+	@Copy CLONE TO DF1: FROM "Enforcer Local.info"
+	@Copy CLONE TO DF1: FROM "Enforcer OFF.info"
+	@Copy CLONE TO DF1: FROM "Enforcer Parallel.info"
+	@Copy CLONE TO DF1: FROM "Enforcer Remote.info"
+	@Copy CLONE TO DF1: FROM "Enforcer_Project.info"
+	@Copy CLONE TO DF1: FROM "Enforcer.doc"
+	@Copy CLONE TO DF1: FROM "Enforcer.doc.info"
+	@Copy CLONE TO DF1: FROM "Enforcer.guide"
+	@Copy CLONE TO DF1: FROM "Enforcer.guide.info"
+	@Copy CLONE TO DF1: FROM "SegTracker"
+	@Copy CLONE TO DF1: FROM "SegTracker.info"
+	@Copy CLONE TO DF1: FROM "FindHit"
+	@Copy CLONE TO DF1: FROM "MMU"
+	@Copy CLONE TO DF1: FROM "MMU.info"
+	@Copy CLONE TO DF1: FROM "RebootOff"
+	@Copy CLONE TO DF1: FROM "RebootOff.info"
+	@Protect DF1:\#? +rwd QUIET
+
+#
+# UUEncoded distribution file
+#
+Enforcer.UU: Enforcer.ReadMe Enforcer.lha
+	@Copy Enforcer.ReadMe TO Enforcer.UU
+	@Echo "*N--------------------------------------CUT--------------------------------------" >> Enforcer.UU
+	@UUEncode Enforcer.lha Enforcer.lha >> Enforcer.UU
+
+#
+# Enforcer source archive
+#
+Source.lha: ReadMe.Source SMakefile $(MY_C) $(MY_A) $(MY_OBJS) $(MY_OBJS1) $(MY_OBJS2) $(MY_OBJS3) $(MY_OBJS4) $(MY_OBJS5) $(MY_OBJS6)
+	-@Delete Source.lha QUIET
+	@Filenote \#?.(c|h|asm|i|rev|o) $(FILENOTE) QUIET
+	@Filenote SMakeFile $(FILENOTE) QUIET
+	@LhA a Source ReadMe.Source
+	@LhA a Source SMakefile
+	@LhA a Source \#?_rev.\#?
+	@LhA a Source $(MY_C) $(MY_A)
+	@LhA a Source $(MY_OBJS) $(MY_OBJS1) $(MY_OBJS2) $(MY_OBJS3) $(MY_OBJS4) $(MY_OBJS5) $(MY_OBJS6)
+	@Filenote Source.lha $(FILENOTE) QUIET
+
+#
+# Enforcer distribution archive
+#
+Enforcer.lha: .DisplayMe Enforcer Enforcer.doc Enforcer.guide LawBreaker LawBreaker.asm Move4K Enforcer.Readme SegTracker FindHit RebootOff MMU Enforcer.info Enforcer.doc.info Enforcer.guide.info LawBreaker.info LawBreaker.asm.info Move4K.info Enforcer.Readme.info SegTracker.info RebootOff.info Enforcer_Project.info MMU.info
+	-@Delete Enforcer.lha QUIET
+	@Filenote \#?.(info|guide|doc) $(FILENOTE) QUIET
+	@LhA a Enforcer .DisplayMe
+	@LhA a Enforcer Enforcer Enforcer.doc Enforcer.guide LawBreaker LawBreaker.asm Move4K Enforcer.Readme SegTracker FindHit RebootOff MMU
+	@LhA a Enforcer Enforcer.info Enforcer.doc.info Enforcer.guide.info LawBreaker.info LawBreaker.asm.info Move4K.info Enforcer.Readme.info SegTracker.info RebootOff.info
+	@LhA a Enforcer Enforcer_Project.info "Enforcer OFF.info" "Enforcer Local.info" "Enforcer Parallel.info" "Enforcer Remote.info" MMU.info
+	@Filenote Enforcer.lha $(FILENOTE) QUIET
+
+#
+# Enforcer source distribution archive
+#
+EnforcerSRC.lha: Enforcer.lha Source.lha
+	@Copy Enforcer.lha EnforcerSRC.lha
+	@LhA a EnforcerSRC Source.lha
+	@Filenote EnforcerSRC.lha $(FILENOTE) QUIET
+
+#
+# Beta testing archive
+#
+EnforcerBeta.lha: ReadMe ReleaseNotes ReadMe.info ReleaseNotes.info Enforcer.lha
+	-@Delete EnforcerBeta.lha QUIET
+	@LhA a EnforcerBeta ReadMe ReleaseNotes ReadMe.info ReleaseNotes.info Enforcer.lha
+	@Filenote EnforcerBeta.lha $(FILENOTE) QUIET
+
+#
+# Postscript source listing archive
+#
+Listing.lha:	Enforcer.ps
+	-@Delete Listing.lha QUIET
+	@Filenote Enforcer.ps $(FILENOTE) QUIET
+	@LhA a Listing Enforcer.ps
+	@Filenote Listing.lha $(FILENOTE) QUIET
+
+#
+# Make the postscript output files
+#
+ps:	Enforcer.ps
+	@Filenote Enforcer.ps $(FILENOTE) QUIET
+	-@Delete Listing.zip QUIET
+	@Zip -9 Listing Enforcer.ps
+	@Filenote Listing.zip $(FILENOTE) QUIET
+
+Enforcer.ps:	Enforcer.doc ReleaseNotes Enforcer.c Handler.asm LawBreaker.asm Move4K.asm SegTracker.c SegTrackerPatch.asm FindHit.c MMU.c MMU_handler.asm SMakefile
+	PS-Print -2lbows -B-Enforcer- Enforcer.doc >Enforcer.ps
+	PS-Print -2lbows -B-Enforcer- ReleaseNotes >>Enforcer.ps
+	PS-Print -lbows -B-Enforcer- Enforcer.c >>Enforcer.ps
+	PS-Print -2lbows -B-Enforcer- Handler.asm >>Enforcer.ps
+	PS-Print -2lbows -B-Enforcer- LawBreaker.asm >>Enforcer.ps
+	PS-Print -2lbows -B-Enforcer- Move4K.asm >>Enforcer.ps
+	PS-Print -lbows -B-Enforcer- SegTracker.c >>Enforcer.ps
+	PS-Print -2lbows -B-Enforcer- SegTrackerPatch.asm >>Enforcer.ps
+	PS-Print -lbows -B-Enforcer- FindHit.c >>Enforcer.ps
+	PS-Print -2lbows -B-Enforcer- RebootOff.asm >>Enforcer.ps
+	PS-Print -lbows -B-Enforcer- MMU.c >>Enforcer.ps
+	PS-Print -2lbows -B-Enforcer- MMU_Handler.asm >>Enforcer.ps
+	PS-Print -2lbows -B-Enforcer- Enforcer.guide >>Enforcer.ps
+	PS-Print -2lbows -B-Enforcer- SMakefile >>Enforcer.ps

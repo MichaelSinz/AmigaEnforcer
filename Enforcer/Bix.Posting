@@ -1,0 +1,69 @@
+Enforcer V37.73 - For 68020/68851, 68030, 68040, & 68060 CPUs
+by Michael Sinz
+
+An advanced debugging tool for the Amiga that uses the MMU of the
+higher versions of the Motorola 68000 processors to help detect and
+find certain classes of bugs.  Includes utilities to pinpoint the
+exact source code line that caused the hit, even if the code is a
+library, device, or resident code.
+
+Changes from 37.72
+
+	To help prevent problems on some systems, Enforcer and MMU now
+	will first try the 68060.library.  Only if that does not open
+	will Enforcer try the 68040.library
+
+	Enforcer will now try to reduce the possible memory fragmentation
+	that was happening during its allocation of alligned memory
+	for the MMU table.
+
+Changes from 37.70
+
+	Added some hack to handle various 68060 library versions.
+	Updated MMU so you can control-c it.
+	Some documentation cleanup.
+
+Changes from 37.62
+
+	Added 68060 support.  (See documentation)
+	Added MMU tool.       (See documentation)
+
+	New examples of how to build a debugger to track Enforcer hits
+	while debugging.  (Enforcer.doc or Enforcer.Guide)
+
+	A large amount of new documentation - only in the Enforcer.Guide
+	file.  This includes information on how 68040.library did the
+	system patches and what implementers of 68060.library need to
+	watch out for.  A must read for any real hacker.
+
+	Source code offer - detailed in the Enforcer.Guide file.
+	(Yes, you can now get the source code to Enforcer!)
+
+Changes from 37.60
+
+	Updated FindHit to work with a larger variety of debugging
+	information - which includes the new DICE compiler.
+
+	Added ROM module scanning to SegTracker.  This is useful since
+	it will at least be able to tell you which ROM module was
+	involved with the hit (and thus you can then better track
+	what happened in your code.)
+
+	Updated DOC and AmigaGuide files as needed.  Note that
+	I finally remembered to update my EMail address :-)
+
+Changes from V37.58:
+
+	Tested against some more CPU boards and now should handle even
+	the strangest of them.  (I don't have these boards so I need
+	reports from people in order to make sure Enforcer works on
+	them.)
+
+	Cleaned up the output of the Enforcer VERBOSE option and
+	added more output to that option.  Also added a check for
+	a strange operation with certain CPU boards.
+
+Please send all comments to Michael Sinz.  Enjoy...
+.
+Enforcer MMU Tool Debugging 68030 68040 68060 FindHit SegTracker MKSoft
+.

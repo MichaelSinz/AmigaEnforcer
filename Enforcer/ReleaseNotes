@@ -1,0 +1,796 @@
+Enforcer 37.73
+
+o	To help prevent problems on some systems, Enforcer and MMU now
+	will first try the 68060.library.  Only if that does not open
+	will Enforcer try the 68040.library
+
+o	Enforcer will now try to reduce the possible memory fragmentation
+	that was happening during its allocation of alligned memory
+	for the MMU table.
+
+Enforcer 37.72
+
+o	Added a hack to help support 68060 libraries that do not handle
+	MMU table access with flushing of the CPU caches.  This is only
+	done for 68060 since the 68040 library I wrote does not have this
+	problem.
+
+o	Added some documentation about how to hack certain 68060.library
+	versions so that they will not "stop" doing the DMA work when
+	Enforcer is loaded.
+
+o	Some updates as to how to contact me.
+
+Enforcer 37.71
+
+o	Internal testing version
+
+Enforcer 37.70
+
+o	Finally found the cause of Page-0 sometimes becoming unprotected
+	in a 68060 CPU.  It had to do with "protecting" a section of
+	code that "must" run atomicly.  The final answer is rather simple
+	and only one instruction.  The reason this only affects the
+	68060 was due to the full restart model it uses.  The bug also
+	existed in the 68040 code (I fixed it now) but it would never have
+	happened in normal operation due to the fact that the 68040 is
+	a half-restart model and thus the handler logic did not need
+	to have this one level of consistancy in it that the 68060 did.
+
+	This one looks like it will be the shipping version for the
+	first 68060 release.
+
+Enforcer 37.69
+
+o	Fixed a problem with recovering from trying to write to ROM
+	on 68060 systems.  This should let Enforcer not lock up after
+	catching a write to ROM addresses (Valid-Read-Only)
+
+o	Added documentation in the 68060 notes page about some 68060
+	CPU cards that do not do real AutoConfig on their hardware
+	of have have code that wants to write to F-SPACE ROM.
+	(I can not tell which since the result is the same in both
+	cases)  Anyway, the FSPACE option, which was already there,
+	is now documented as helping in this case too.
+
+Enforcer 37.67
+
+o	Some minor cleanup in the enforcer trapping routines
+
+o	A large amount of new documentation - only in the Enforcer.Guide
+	file.  This includes information on how 68040.library did the
+	system patches and what implementers of 68060.library need to
+	watch out for.  A must read for any real hacker.
+
+Enforcer 37.65
+
+o	Major update - now includes first public release of the 68060
+	code.  It should work rather well.
+
+o	Added a new tool - MMU, a very simple MMU table dump tool for the
+	68040 and 68060 MMU tables.
+
+o	Updated documentation for 68060 support and better debugger support
+	New examples of how to build a debugger to track Enforcer hits
+	while debugging.  (Enforcer.doc or Enforcer.Guide)
+
+
+Enforcer 37.62
+
+o	Updated FindHit to work with a larger variety of debugging
+	information - which includes the new DICE compiler.
+
+o	Added ROM module scanning to SegTracker.  This is useful since
+	it will at least be able to tell you which ROM module was
+	involved with the hit (and thus you can then better track
+	what happened in your code.)
+
+o	Updated DOC and AmigaGuide files as needed.  Note that
+	I finally remembered to update my EMail address :-)
+
+Enforcer 37.60
+
+o	Cleaned up and expanded the VERBOSE mode output some mroe.
+
+o	Tested against some more CPU boards and now should handle even
+	the strangest of them.  (I don't have these boards so I need
+	reports from people in order to make sure Enforcer works on
+	them.)
+
+Enforcer 37.59
+
+o	Added more output when Enforcer is run in Verbose mode such that
+	people with problems may be able to help me with them.
+
+Enforcer 37.58
+
+o	Found problem with 68030 MMU tables that would not be built correctly
+	when a single memory header crossed high-byte memory table entry.
+	(16M lines)  Anyway, this should make Enforcer work much better
+	on A1200 68030 cards that have lots of local RAM.
+
+Enforcer 37.56
+
+o	Rebuilt with SAS/C 6.51
+
+o	Added support in FindHit for empty LINE debug hunks that are sometimes
+	produced by the SAS/C 6.50 SLink.  This is actually a good thing
+	and should help reduce problems in the FindHit code for the future.
+
+o	Added a signal to the system to provide for quick turn-around of
+	Alert output from Enforcer when Enforcer output is not direct to
+	the serial or parallel hardware.
+
+Enforcer 37.55
+
+o	Added a new tool (and icon for it) called RebootOff.
+	This tool will automatically turn off Enforcer during a keyboard
+	reset on machines that support keyboard reset handlers.
+	It is mainly useful for the A3000 machines with SuperKickstart
+	and they support Keyboard Reset Handlers.  (This tool lets you
+	not cause a Kickstart reload on a keyboard reset...)
+
+o	Updated the docs
+
+Enforcer 37.54
+
+o	Updated the docs a bit
+
+o	Changed the makefile to handle Make INTERNAL on my system (not
+	anything for public release, but it is a change)
+
+o	Updated the copyright notice in the executable to match the
+	documentation.
+
+Enforcer 37.53
+
+o	Well, with the fine help of Robert Chapman and his hardware
+	setup, I think I have finally cracked the last of the Enforcer OFF
+	problems.  I don't have all of the Amigas and configurations
+	available, so I have to use nice people to help test via long
+	distance.
+
+o	The NORELOADKICK option had to be removed.  Most (99%) of the
+	production A3000 machines with SuperKickstart would hang
+	so hard that you had to power-down the machine if you did
+	use this option.  Oh well, people wanted it but it is just
+	not possible.  Sorry...
+
+Enforcer 37.52
+
+o	Added the NOALERTPATCH option to turn off the Alert() patch
+	that was added in V37.47
+
+Enforcer 37.51
+
+o	Added much more to the AmigaGuide Enforcer documentation.
+	Now includes a click-able Enforcer hit and descriptions
+	of what the various fields are.
+
+o	Added the NORELOADKICK/S option to tell Enforcer not to
+	force a Kickstart reload on SuperKickstart A3000 machines.
+
+Enforcer 37.50
+
+o	Well, I did not have FindHit supporting all of the older
+	versions of SAS/C 5.x...  It seems that sometimes SAS/C 5.x
+	would not produce a 'LINE' debug hunk but would produce
+	an extended 'SRC ' hunk which included the data from the
+	'LINE' hunk is a new and magical way.  Anyway, FindHit
+	now knows about this form and will magically use that if no
+	'LINE' debug hunk is found.  A rather strange benefit to
+	this is that SAS/C 5.x would extend the file name with
+	the full path name in the 'SRC ' hunk.  This is not the case
+	with SAS/C 6.x as the path is relative to where you did the
+	compile.
+
+Enforcer 37.49
+
+o	Added an AmigaGuide/MultiView document that is the Enforcer.doc
+	file...  I don't wish to change the docs anymore :-)
+
+Enforcer 37.48
+
+o	Fixed a DOC problem that showed up due to the string in the
+	Enforcer Alert output.  The Alert output was changed such that
+	the AutoDOC program would not get upset.
+
+o	Fixed a documentation error in LawBreaker docs which gave
+	the wrong command line for FindHit.
+
+Enforcer 37.47
+
+o	Added a patch to Alert() such that Enforcer can display
+	the alert in the Enforcer output stream (plus some more details)
+	and such that dead-end alerts can correctly shut down the
+	system and still be displayed as needed.  This does, however,
+	remove the flashing display of the recoverable alerts and
+	only display them in the Enforcer output.
+
+o	Updated LawBreaker to also do an Alert such that the results
+	of an Alert can be seen by the user.
+
+o	Updated the docs to talk about this new feature.
+
+Enforcer 37.46
+
+o	FindHit has been changed such that multiple hunk/offsets
+	can be found in one command line.  It also uses the hunk:offset
+	notation that is used in MetaScope and some of my tools.
+	Also added a few error messages and better messages.
+
+o	More documentation changes
+
+Enforcer 37.45
+
+o	Added a new tool:  FindHit
+	This tool will read executables and, if LINE debug
+	information is in it, will print the source file name
+	and line number of the hit.
+
+o	LawBreaker executable now has LINE debug information
+	such that people can try FindHit.
+
+o	Documentation changes and additions for FindHit
+
+Enforcer 37.44
+
+o	More documentation changes
+
+o	Range checks the PRIORITY argument now.
+	(Was documented as unchecked but now is checked)
+
+Enforcer 37.43
+
+o	Added special support in SegTracker for a future
+	SAS/C CPR feature.  Also updated all DOCs as to my
+	EMail address and other such items.
+
+Enforcer 37.42 released to the server
+
+o	Added string length limits for the name strings found
+	in tasks and CLIs.  This is such that a bad string
+	pointer will not cause too much damage.  Enforcer will
+	only print up to 128 characters of any string.  This
+	is done at the low level of the output routines such
+	that every string is checked correctly.  (This does,
+	however, mean that the intro string is limited to
+	the 128 characters...)
+
+o	Changed number of flashes to mean speed of flashes.
+
+Enforcer 37.41 released to the server
+
+o	Added LED/K/N option to select the number of flashes
+	the LED will do for each Enforcer hit.  This option
+	was mainly added such that the LED flash can be turned
+	off.  (LED=0)  It also can be used to make the LED
+	flash take a bit longer by setting it to a large
+	value (LED=12345) such that local Enforcer I/O will
+	not make the LED flash look too fast.  Default is
+	still 1 for compatibility with before.
+
+Enforcer 37.40 released to the server
+
+o	If CDSTRAP is in the system, Enforcer now will also
+	add the special CD hardware address ranges
+
+Enforcer 37.39 released to the server
+
+o	The datestamp is now exact to 1 second which is all
+	that is displayed in the date string anyway...
+
+Enforcer 37.38 released to the server
+
+o	Added the AREGCHECK and DREGCHECK options which will
+	use SegTracker to check the values in the Address
+	and Data registers.
+
+o	Changed the "SegT:" lines to be "---->" such that they
+	stand out a bit more.
+
+Enforcer 37.37 released to the server
+
+o	Added a DATESTAMP option which tags the Enforcer hits
+	with the date and time of the hit.
+
+o	Slight documentation cleanup...
+
+Enforcer 37.36 released to the server
+
+o	Re-enabled the Hunk-o-matic such that those people
+	who do not run SegTracker will get useful information.
+
+Enforcer 37.35 released to the server
+
+o	Silly typo caused Enforcer not to work if you did not
+	install SegTracker...  (Cool bug too ! Looked like but
+	was not a compiler bug... Arg !)
+
+Enforcer 37.34 released to the server
+
+o	More docs updating and cleanup...
+
+o	Order of the SegT: stuff fixed to be a call order
+	That is, first the hit itself, then the first return
+	address, then the next, so on until the stack runs
+	out (stack display, that is)  Very handy for finding
+	who called who in the path to an Enforcer hit.
+
+Enforcer 37.33 released to the server
+
+o	STACKCHECK now checks whatever stack is displayed
+	rather than having its own number...
+
+o	The task name is not displayed if the code is running
+	from an interrupt.  Rather "Processor Interrupt Level x"
+	is displayed for the name.
+
+Enforcer 37.32 released to the server
+
+o	Added the STACKCHECK keyword whick will check each of
+	the longwords on the stack (for as many as specified)
+	and will display any that are in any of the SegTracker
+	tracked SegLists.  This is useful for when a program
+	has a hit in, say, strcat() so the hung/offset of the
+	various return addresses may be useful.  This is also
+	useful for when a ROM routine has the hit but the bug
+	is in the calling program.  Requires SegTracker to be
+	installed before Enforcer.
+
+o	Changed the output format of the SegT: line to include
+	the address such that it can be used for the STACKCHECK
+	feature.
+
+Enforcer 37.31 released to the server
+
+o	Cleaned up the DOCs a bit more...
+
+o	Added a major change to the SegTracker docs...
+
+o	SegTracker FIND/M option has been cleaned up a bit
+	and now outputs more interesting information.
+
+Enforcer 37.30 released to the server
+
+o	Removed the SegTracker keyword.  Enforcer will now always
+	use SegTracker if SegTracker was installed before Enforcer
+	is started.
+
+o	SegTracker got a new keyword to do a detailed dump.
+
+Enforcer 37.29 released to the server
+
+o	Added a global SegList tracking tool which will track all
+	SegLists loaded via LoadSeg() or NewLoadSeg() and unloaded
+	via UnLoadSeg().  It even handles SegList splitting and
+	merging.
+
+o	Added an option to Enforcer to make use of SegTracker such
+	that Enforcer hits within disk loaded libraries, devices, etc.
+	will show the hunk and offset even though it is not on the
+	seglist of the task/process.
+
+o	Much more detailed documentation on Enforcer and how to make
+	debuggers work together with Enforcer.  Should make it rather
+	easy for debuggers to stop right on an Enforcer hit and for
+	debuggers not to cause Enforcer hits.
+
+Enforcer 37.28 released to the server
+
+o	On 68040 systems with autoconfig cards that are marked as 0-bytes
+	in size, Enforcer would not start as it would detect an invalid
+	MMU setup request due to the 0-byte expansion board.  It now
+	ignores them.
+
+Enforcer 37.27 released to the server
+
+o	Under certain conditions on 68030 and 68020 systems, Enforcer
+	could crash when asked to turn itself off.  This was rather
+	silly bug but took much to long to show up and to fix.  It is
+	now fixed.
+
+Enforcer 37.26 released to the server
+
+o	Well, there was one more bug left:
+
+	When running in pre-3.0 (pre 39.106) kickstart on a 68040, some
+	memory in the lower-4K was used for some code from Expansion.
+	When the LVO was called/jumped to, Enforcer was unable to deal
+	with the instruction fault in all cases.  This release fixes
+	this problem.
+
+Enforcer 37.25 released to the server
+
+o	Looks like fish to me! ;^)  (Time to let the rest of the world see
+	what silly work I have done...)
+
+Enforcer 37.24 released to the server
+
+o	Added code to detect physical bus errors vs MMU table traps.
+	This was added so that an enforcer hit caused by access to valid
+	memory that has caused a physical bus fault will be recognized
+	as such.  The 68040 hit was always noticeable due to the special
+	status word but the 68030 version could not.  Enforcer now clearly
+	marks this error.
+
+o	Some documentation cleanup and icon tooltype cleanup...
+
+Enforcer 37.22 released to the server
+
+o	Well, there was one more problem with the QUIET mode on the 68040.
+	Writes to ROM were not quiet.  This is because it is not the MMU
+	that is causing the hit but rather the actual hardware bus fault.
+	Enforcer now checks just before it is about to yell to see if the
+	QUIET flag is set.  If it is, it will skip the output and blinking
+	and just do the instruction failure mop-up and writeback flushing.
+	This should fix the last of the non-QUIET operations since it is
+	now fixed at the source. :-)
+
+o	I have now converted the release version of Enforcer over to SAS/C 6
+	This saved a number of bytes (not as many as you may expect as over
+	half of the code is assembly)  It does, however, put the actual program
+	size down to 9760 bytes (filesize should be 10280, which is just over
+	10K in file size)  (Not that it matters much, but I like having my
+	code be as fast, small, and bug-free as possible, after all my name is
+	on it!)
+
+Enforcer 37.21 released to the server
+
+o	Enforcer now will work even with 68LC040 CPUs now that I have a
+	method of checking for the 68LC040 vs 68EC040 CPUs.
+
+o	Enforcer will correctly not patch the cache control code if
+	a V37.10 or later 68040.library is in use.  This can make a difference
+	for DMA performance.
+
+o	Enforcer will now force the 68040.library to load if someone tries
+	to run it before SetPatch.  Note that doing so is not supported.
+	(That is, Enforcer should be run *after* SetPatch)
+
+Enforcer 37.20 released to the server
+
+o	Well, I almost had Enforcer QUIET fully working on 68040 machines.
+	I now do have it working...  (Not that anyone should be using that
+	option ;^)
+
+o	Added a new option:  INTRO/K   This lets you define an introduction
+	string for Enforcer hits.  A number of people asked for special
+	characters or fixed introduction strings.  Now you can have it.
+	The string is displayed as is.  This means you can place things
+	such as control characters in it if you can get it past ReadArgs().
+	(*N for newline, etc)
+
+Enforcer 37.18 released to the server (and to the public... ???)
+
+o	Well, I think this one is going out...  One final go-around and if
+	no problem reports, out it goes.
+
+	No real changes to the code...
+
+Enforcer 37.17 released to the server
+
+o	Wow!  I can't believe my eyes!  I think I have the last of the trace
+	problems solved!  It was rather tricky, but it should keep everyone
+	happy.  Even T0 mode tracing is now supported!!!
+
+o	Noticed a bug that no one ever noticed before:  The interrupt levels
+	were coming out wrong.  Fixed now.
+
+o	Interrupt levels now also show if it is in USER mode or SUPERVISOR
+	mode.  This has come in handy just today.
+
+	The above change required changes in the LawBreaker and Enforcer
+	documentation.
+
+o	Slight speed increase in the handling of legal, but trapped, reads.
+	However, it should be noted that the number of instructions that are
+	executed for a read of location 4 is *huge*.  (On the order of 50
+	on the 68040 due to writebacks and the like)
+
+o	Some documentation clean up has also been done.  Since it now does
+	the final trace mode, all looks good.  Now is the time to do some
+	more documentation.
+
+Enforcer 37.16 released to the server
+
+o	Well, this tracing stuff with the 68040 is a royal pain.  I think
+	I have it working with standard T1 tracing now.  T0 tracing is a bit
+	more complex since the instruction that could cause a T0 trace hit
+	is not always just a branch.  (See 8-11 in the 68040 manual)
+
+	Maybe, in the future, I will implement T0 as just a superset of
+	T1 - That is, if either is set and a hit of some sort happens,
+	it will act as if T1 was set.  I don't know what the right answer is.
+
+o	More documentation cleanup on the 68040 issues.  There are just
+	so many things that have to be done on the 68040.  It is amazing
+	that the machine even runs! ;^)
+
+o	Updated the doc on Move4K.  I was wrong:  It should be *AFTER*
+	SetPatch runs...
+
+Enforcer 37.15 released to the server
+
+o	Found a major bug in the code that brings the signal from	!!!!!
+	the bus error handler up to the softint and then to the		!!!!!
+	Enforcer task itself.  I am very surprised this worked before.	!!!!!
+	This code only ran with the special I/O modes.			!!!!!
+
+o	Updated the buffer walking code a bit to try to save some cycles.
+
+o	On the 68040, Enforcer QUIET did not really make Enforcer 100%
+	QUIET.  It now does.  (Not that you should need to run Enforcer
+	in the QUIET state, but...)
+
+o	Some more documentation cleanup...
+
+Enforcer 37.14 released to the server
+
+o	Thanks to "Talin" for some nice icon ideas.  These are much better
+	than the last icons.
+
+o	Icon tooltypes have been updated.
+
+o	Added an option to Enforcer to let you select the special I/O
+	priority.  This is here mainly for testing reasons and because
+	it may be possible for an application to have a bug that would
+	require Enforcer to change this priority in order to see the
+	Enforcer hit when running one of the special I/O modes.
+
+o	Some more documentation cleanup.  There are many issues...
+
+o	Added a new program that can be used at the *FIRST* command
+	in the startup-sequence on 68040 machines that will try to
+	prevent the use of any of the first 4K of CHIP RAM.  This
+	is much the same code as Enforcer itself has but designed
+	to be run as early as possible in order to help system
+	performance as much as possible (keep as much out of that
+	first 4K as possible)
+
+o	Other minor cleanup in internal documentation.
+
+Enforcer 37.12 released to the server
+
+o	The CDTV option keyword has gone away.  Enforcer will now
+	automatically detect a CDTV system and make the CDTV "E-space"
+	available in the MMU.
+
+o	Enforcer will now notice if you have a credit card installed
+	other than as CHIP memory.  If the card.resource exists, it
+	will enable the address space of the credit card.
+
+o	Enforcer will now also patch ColdReboot() such that it is possible
+	to reboot machines that are running Enforcer by calling this
+	LVO.  (Note that some SuperKickstart machines may still not work
+	due to some rather strange incompatibilities.)
+
+o	Even more code has been added to try to keep debuggers happy
+	when using trace mode on a 68040 when running Enforcer.
+	This *hopefully* will let CPR correctly trace even reads of
+	location 4.  (It seems to work here, with the latest CPR)
+
+o	A bug in the decoding of the SR register had left the I status
+	improperly displayed.  It was always showing as "( 0)" even
+	when it should have shown some level such as "(I3)"
+
+o	More documentation cleanups...
+
+o	Enforcer executable size is still under 10K  (File size is
+	10408 bytes, actual memory size is 9888 bytes)  This includes
+	the 1K for the vectors (VBR moved) but not the MMU tables.
+
+Enforcer 37.11 released to the server
+
+o	Enforcer now does the 68040 CachePreDMA/CachePostDMA/CacheControl
+	patches needed to make COPYBACK mode work right with DMA when
+	the DMA is on a non-qual-long address.  This required
+	the addition of a bit of code to also check for safe exiting
+	of Enforcer.  It also means that on a 68040, Enforcer may
+	not be able to be turned off, depending on what else is
+	running in the system.
+
+	NOTE:	Currently, when running Enforcer, COPYBACK mode is
+	*ALWAYS* turned on for any cachable memory.  Since we define the
+	machine as working with COPYBACK modes, if you need COPYBACK
+	turned off, you will need to turn off the DATACACHE.  This may
+	yet become standard documentation to Enforcer.  I am not sure
+	yet what to do about this.
+
+o	LawBreaker is now "safe" even if Enforcer is not running.
+	It is writing to memory which will not crash the OS under
+	normal conditions.  Updated DOCs for LawBreaker are also
+	included.
+
+o	LawBreaker source has been cleaned up since it will be part
+	of the distribution.
+
+o	Made some new icons and cleaned up the ones from the last release.
+	LawBreaker now has an icon since it is safe to run even without
+	Enforcer running.  All documents have icons with MORE as the
+	default tool.
+
+Enforcer 37.9 released to the server
+
+o	Made a simple Enforcer icon and a few Enforcer PROJECT icons.
+	They have some tooltypes for examples and should work just fine.
+	Don't have an icon for LawBreaker yet as it would be bad to run
+	it if Enforcer is not running...
+
+o	Major work in 68040 WRITE faults and MOVEM compatibility.
+	This was the really tricky part but it looks like I finally
+	got it right.  It should now be possible to have a MOVEM
+	either cause an Enforcer hit and not cause Enforcer to
+	lock up or be a valid hit on the lower 3K of CHIP memory
+	and have it correctly write to it.  It even works in pipeline
+	cases where the instuction just before the MOVEM caused
+	a hit too.  All addressing modes of MOVEM are supported,
+	including the 68020 and up modes (index/indirect/etc)
+
+o	Fixed bug in writeback handling after a write fault after a
+	read fault.  I had forgot to check for the WRITEPROTECT bit
+	in the MMU tables...  Rather silly mistake.  Thanks for the
+	great test example by Ken.
+
+o	Did some work with the way the 68040 handler deals with the
+	trace vector.  It will now try to save/restore the vector
+	that was currently in the physical vector at the time of
+	the bus fault and restore it on exit.  This still can not
+	be 100% perfect, but it should be better.
+
+o	When finding and mapping the ROM on the 68040, the ROM addresses
+	were not being marked as cacheable.  This was a mistake.  They now
+	are.
+
+o	Added some words that talk about the "writeback" issues of the
+	68040 and the fact that 2nd, 3rd or 4th hits may be lost due to
+	them.  I am still investigating what to do about these.  (Like
+	what kind of report to display...)
+
+Enforcer 37.8 released to the server
+
+o	Some cleanup to the way the MMU is set up and tested for.
+	Due to a "bug" in the 68EC040, you can not test for the MMU
+	in a safe manner.  Thus, I check for the FPU and if you have
+	that, I assume you have the MMU...  (Since all 68040 CPUs
+	with FPUs have MMUs :-)
+
+o	Enforcer now will work with ROM mapping toys.  That is,
+	toys such as CPU FASTROM and SETCPU, etc. can be used
+	if Enforcer is started after they have mapped the ROM
+	and are running.  Enforcer will find the ROM and use the
+	same mapping when it builds the Enforcer tables.  Use the
+	VERBOSE keyword to see the physical address of the ROM.
+	This turns out to be just a more general case of handling the
+	A3000 SuperKickstart issue.  This also means that toys
+	which let you run a new kickstart via the MMU will work
+	with Enforcer.
+
+o	Now added some kludges so that it will move as much of the
+	system objects out of the first 4K as it can.  It also forces
+	the first 4K of RAM to become unavailable to AllocMem()
+	which should make the system much faster.  (This is 68040 only)
+
+o	Added a new keyword (STDIO) which lets you get the Enforcer hits
+	on standard out.
+
+o	Did some more documentation...
+
+o	Fixed a spelling error (shame)
+
+Enforcer 37.5 released to the server
+
+o	Major changes happened this time.  The biggest of which is the
+	generation of 68040 "magic" MMU tables that squeeze the 2meg of
+	MMU tables into a small amount of memory.  (Such as 32K total
+	memory used on this machine, which is in 4K of stack, 9K of code,
+	1K of overhead, and about 18K for MMU tables.)
+
+o	The first pass at the 68040 Enforcer code.  It seems to work at
+	the moment.  The next pass will require the added features of the
+	68040.
+
+o	Super-fast 68040 bus handler that makes for some really high-speed
+	access possible.  (Even without moving low memory)
+
+o	Internal restructuring that should let a future design idea be
+	possible...  (Now, if I just had the time...)
+
+Enforcer 37.3 released to the server
+
+o	Fixes bug on A2000 systems where it would not turn off the MMU
+	correctly when you quit Enforcer...  (Rather sill bug...)
+	(After all, you should never quit Enforcer :-)
+
+Enforcer 37.2 released to the server
+
+o	A few error strings cleaned up...
+
+o	There was one case of an error message getting printed even if
+	Enforcer was started from the Workbench.  This no longer happens.
+
+Enforcer 37.1 released to the server
+
+o	This is a completely new Enforcer and only kept the name the same
+	as the original version.
+
+o	This Enforcer requires 2.0 as it does not have any kludges in
+	it and it uses ReadArgs.  Note that this means that there is no
+	exempt task!  Anything that causes a hit will be reported!
+
+o	Enforcer can now be started from the Workbench and the options can
+	be set in the ToolTypes.  (Much like I did PM and DiskSpeed 4.1)
+
+o	Enforcer no longer detaches itself.  You must RUN >NIL: it if you
+	want that.  The reasons for this are somewhat technical and have to
+	do with some new features that are going to be added as time goes on.
+
+o	Enforcer is now a bit faster at the location 4 reads.
+
+o	Enforcer has a different output format designed to give more
+	information in less space and still keep it easy to read.
+	An example HIT is below.  Note that the default stack backtrace
+	is 2 lines.  This is settable.
+
+o	Enforcer hunk search code is now based on the code in Owner plus
+	some other tricks.  Enforcer will correctly find hunk information
+	for workbench started applications in addition to CLI started ones.
+	It will also find hunk information for LoadSeg()/CreateProc()
+	things (such as handlers)  In addition, invalid seglists are
+	detected via the use of PTEST and a few other tricks.
+
+o	Enforcer will now validate the task names not only for NULL but
+	also with a PTEST such that death-hits do not happen on tasks
+	or CLIs with bad names...
+
+o	You can CTRL-C from Enforcer.
+
+o	When Enforcer quits, it fully cleans up.  The only thing that
+	could be a problem is if someone else moved the VBR after Enforcer
+	did.  Enforcer will just force it to move back to where it was
+	when it started.  For this reason (and a number of others)
+	you *MUST* run SetPatch *BEFORE* Enforcer!
+
+o	A bug in the older Enforcer could let a section of valid memory
+	not get marked as valid.  Since this code is completely new,
+	this bug no longer exists.
+
+o	The settable stack backtrace is unlimited.  Enforcer will PTEST
+	its way down the stack making sure that the stack is valid
+	before it continue down the stack.
+
+o	There is a new DEADLY option which has Enforcer return $ABADFEED
+	when an illegal memory read happens.  By default, Enforcer returns
+	$0 on an illegal memory read.
+
+o	The new Enforcer exception code is *MUCH* cleaner and well documented
+	for future work.  It is also a bit more flexible.
+
+o	Enforcer can now be used even if locale.library has a bug in it.
+	(This is for you, Martin, so you can test locale ;^)
+
+o	Enforcer now has a command line switch to make it use the parallel
+	port rather than the serial port.  (No more special versions)
+
+o	Optional display of some memory around the PC.  (16 longs, 8 before,
+	1 at, 7 after the PC of the hit)
+
+o	Enforcer can now output to either the EXEC RawIO LVO or to a file.
+	This will make it much easier for people without a second machine
+	to get the output they want.
+
+*******************************************************************************
+***                                                                         ***
+***  Enhancements Section - These are not yet done and may never be done    ***
+***                                                                         ***
+*******************************************************************************
+
+	Option to make Enforcer let SAD not cause Enforcer hits
+	(This one be very hard!)  (SAD is the new ROM debugger in V39...)
+
+	Option to let Enforcer be LOADF'ed into a card $00F00000...
+	(This should be easy...  I think...)
+
+	Better error messages for when Enforcer can not start up.
+
+	Other user input items (when I feel like it :-)

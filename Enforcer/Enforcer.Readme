@@ -1,0 +1,123 @@
+                            Enforcer 37.73
+                                  by
+                             Michael Sinz
+
+                        Copyright © 1992-1998
+                         All Rights Reserved
+
+******************************************************************************
+*                                                                            *
+* Permission is hereby granted to distribute this program's archive          *
+* containing the executables and documentation for non-commercial purposes   *
+* so long as the archive and its contents are not modified in any way.       *
+*                                                                            *
+* This program may not be distributed for a profit.                          *
+*                                                                            *
+* This program is not in the public domain.                                  *
+*                                                                            *
+******************************************************************************
+
+Enforcer V37 - For 68020/68851, 68030, 68040, & 68060 CPUs
+
+It requires V37 of the OS or better and does not have *any*
+exceptions in it for specific software.  Nothing should be causing
+Enforcer hits.
+
+Requires an MMU.  On 68EC030 systems, it may think it is working
+even if it is not due to the fact that the missing MMU is very
+hard to detect.  Use LawBreaker to check.
+
+This Enforcer has also been highly optimized to be as fast as
+possible.
+
+Enforcer can now also be used with CPU or SetCPU FASTROM or most
+any other MMU-Kickstart-Mapping tool.  This means that you do not
+have to give up your speed in order to use Enforcer.  (Major win
+on A2000 and A500 systems)
+
+Make sure you read the documentation before using these programs.
+
+ *****************
+** Read the DOCs **
+ *****************  Watch out since Enforcer does not get used
+the same as the old Enforcer.  Remember, this thing is a completely
+different beast.
+
+-----
+
+Changes from 37.72
+
+	To help prevent problems on some systems, Enforcer and MMU now
+	will first try the 68060.library.  Only if that does not open
+	will Enforcer try the 68040.library
+
+	Enforcer will now try to reduce the possible memory fragmentation
+	that was happening during its allocation of alligned memory
+	for the MMU table.
+
+Changes from 37.70
+
+	Added some hack to handle various 68060 library versions.
+	Updated MMU so you can control-c it.
+	Some documentation cleanup.
+
+Changes from 37.62
+
+	Added 68060 support.  (See documentation)
+	Added MMU tool.       (See documentation)
+
+	New examples of how to build a debugger to track Enforcer hits
+	while debugging.  (Enforcer.doc or Enforcer.Guide)
+
+	A large amount of new documentation - only in the Enforcer.Guide
+	file.  This includes information on how 68040.library did the
+	system patches and what implementers of 68060.library need to
+	watch out for.  A must read for any real hacker.
+
+	Source code offer - detailed in the Enforcer.Guide file.
+	(Yes, you can now get the source code to Enforcer!)
+
+Changes from 37.60
+
+	Updated FindHit to work with a larger variety of debugging
+	information - which includes the new DICE compiler.
+
+	Added ROM module scanning to SegTracker.  This is useful since
+	it will at least be able to tell you which ROM module was
+	involved with the hit (and thus you can then better track
+	what happened in your code.)
+
+	Updated DOC and AmigaGuide files as needed.  Note that
+	I finally remembered to update my EMail address :-)
+
+Changes from V37.58:
+
+	Tested against some more CPU boards and now should handle even
+	the strangest of them.  (I don't have these boards so I need
+	reports from people in order to make sure Enforcer works on
+	them.)
+
+	Cleaned up the output of the Enforcer VERBOSE option and
+	added more output to that option.  Also added a check for
+	a strange operation with certain CPU boards.
+
+Please send all comments to Michael Sinz.  Enjoy...
+
+Check out http://www.users.fast.net/~michael_sinz/index.html
+
+/----------------------------------------------------------------------\
+|      /// Michael Sinz                                                |
+|     ///                   I-NET:  Enforcer@sinz.org                  |
+|    ///   BIX:  msinz      or      msinz@bix.com                      |
+|\\\///    "Can't I just bend one of the rules?" said the student.     |
+| \XX/     The Master just looked back at him with a sad expression.   |
+\----------------------------------------------------------------------/
+
+ ************
+** Remember **	*NOTHING* should cause an Enforcer hit.  There is
+ ************	no reason to ever cause one if the software is written
+		correctly.  When Enforcer is running, the VBR is moved
+		and even interrupt vector poking should work just fine
+		without Enforcer hits.  Software that causes Enforcer
+		hits may not be able to run on future systems.  In fact,
+		such software may not even run on current systems.
