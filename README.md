@@ -2,8 +2,6 @@
 
 This is a snapshot of my Amiga Enforcer source from my Amiga.
 
-<img style="float: right;" src="Checkmark.gif" alt="My Amiga Checkmark as rendered on an Amiga with a 2-bit plane display (yes, only 2 bits per pixel)" />
-
 I have not touched this code in some time but people are still using it actively in the Amiga world so I figured I should put it out there as a github project to document the source and allow forks as long as they maintain the Copyright and are public.  As such, I have chosen to distribute this under the Apache License.
 
 ## Amiga Enforcer under Apache License 2.0
@@ -43,3 +41,4 @@ Unfortunately, much of the RCS history in Enforcer is lost due to bugs in RCS an
 > I hope that his provides a way for the legacy of the Amiga and Enforcer's role on the Amiga, to continue to live.
 >
 > -- Michael sinz
+![My Amiga Checkmark as rendered on an Amiga with a 2-bit plane display (yes, only 2 bits per pixel)](Checkmark.gif)
