@@ -19,17 +19,21 @@
 
                     @{"    Copyright    " link Copyright}@{"    Credits      " link Credits}
 
-******************************************************************************
-*                                                                            *
-* Permission is hereby granted to distribute the Enforcer archive            *
-* containing the executables and documentation for non-commercial purposes   *
-* so long as the archive and its contents are not modified in any way.       *
-*                                                                            *
-* Enforcer and related tools may not be distributed for a profit.            *
-*                                                                            *
-* Enforcer and related tools are not in the public domain.                   *
-*                                                                            *
-******************************************************************************
+*****************************************************************************
+*                                                                           *
+* Licensed under the Apache License, Version 2.0 (the "License");           *
+* you may not use this file except in compliance with the License.          *
+* You may obtain a copy of the License at                                   *
+*                                                                           *
+*    http://www.apache.org/licenses/LICENSE-2.0                             *
+*                                                                           *
+* Unless required by applicable law or agreed to in writing, software       *
+* distributed under the License is distributed on an "AS IS" BASIS,         *
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  *
+* See the License for the specific language governing permissions and       *
+* limitations under the License.                                            *
+*                                                                           *
+*****************************************************************************
 
 @{"----> Support Enforcer - Register today and get a source code license! <-----" link SourceCode}
 
@@ -2575,29 +2579,35 @@ I multitask, therefor we are.
 @ENDNODE
 
 @NODE Copyright
-@TITLE "Enforcer - Copyright © 1992-1998"
+@TITLE "Enforcer - Copyright ï¿½ 1992-1998"
 
-Enforcer - Copyright © 1992-1998 - Michael Sinz
+Enforcer - Copyright ï¿½ 1992-1998 - Michael Sinz
            All Rights Reserved
 
 The original Enforcer was written by Bryce Nesbitt.  It was instrumental
 to the development of 2.04 and to the improvement in the quality of
-software on the Amiga.  It is Copyright © 1991 - Commodore-Amiga, Inc.
+software on the Amiga.  It is Copyright ï¿½ 1991 - Commodore-Amiga, Inc.
 
 Enforcer V37 is a completely new set of code designed to provide even
 more debugging capabilities across more hardware configurations and
 with more options.  Michael Sinz designed and developed Enforcer V37.
 
 Enforcer and the tools and documentation in the Enforcer archive are
-*not* public domain.  They are Copyright © 1992-1998 - Michael Sinz.
+*not* public domain.  They are Copyright ï¿½ 1992-1998 - Michael Sinz.
 
-Enforcer.guide - Copyright © 1993-1998 - Michael Sinz
+Enforcer.guide - Copyright ï¿½ 1993-1998 - Michael Sinz
 
-Permission is hereby granted to distribute the Enforcer archive
-containing the executables and documentation for non-commercial purposes
-so long as the archive and its contents are not modified in any way.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-Enforcer and related tools may not be distributed for profit.
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
 
   +-----------------------------------------------------------+
@@ -3246,7 +3256,7 @@ Index of all nodes in the Enforcer.guide document:
 @{"  Debuggers: Trapping a hit               " link Debuggers1}
 @{"  Detail Example Hit                      " link DetailExample}
 @{"  Enforcer                                " link Enforcer}
-@{"  Enforcer - Copyright © 1992-1998        " link Copyright}
+@{"  Enforcer - Copyright ï¿½ 1992-1998        " link Copyright}
 @{"  Enforcer Beta Testers                   " link Credits_Testers}
 @{"  Enforcer Credits                        " link Credits}
 @{"  Enforcer Documentation                  " link MAIN}
