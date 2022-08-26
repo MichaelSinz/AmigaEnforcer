@@ -42,3 +42,6 @@ Unfortunately, much of the RCS history in Enforcer is lost due to bugs in RCS an
 >
 > -- Michael sinz
 ![My Amiga Checkmark as rendered on an Amiga with a 2-bit plane display (yes, only 2 bits per pixel)](Checkmark.gif)
+
+## Enforcer Workbench View
+![Workbench display of my source on the Amiga](Enforcer.gif)
