@@ -28,6 +28,10 @@ The only changes to the files are those needed to license the code under the Apa
 
 See [my Enforcer page](http://www.sinz.org/Michael.Sinz/Enforcer/index.html) for the original web page and binary downloads.
 
+## File Text Encoding
+
+Since this is from the Amiga directly, the files are not UTF-8 but rather [ISO/ECMA Latin-1 aka 8859-1](https://en.wikipedia.org/wiki/ISO/IEC_8859-1) codepage which is what the Amiga native codepage was.  For the most part this does not change anything as 99.9% of all characters are below the 128 codepoint (no high bit set) but there are a few that are not and thus may look very strange in modern systems.
+
 ## Change history?
 
 Unfortunately, much of the RCS history in Enforcer is lost due to bugs in RCS and CVS that we had back in the day.  A number of the files were "truckated" in ways that broke the history or worse.  I will see if I can get more history that works but it does not look good.
