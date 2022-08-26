@@ -22,7 +22,7 @@ limitations under the License.
 
 ## Where is the code?
 
-See the Enforcer directory that hold a copy of my source directory, including the SMakefile that builds the archives and such.  This is designed to run natively on the Amiga and depends on the SAS/C compiler we used to build much of the Amiga platform.
+See the Enforcer directory that holds a copy of my source directory, including the SMakefile that builds the archives and such.  This is designed to run natively on the Amiga and depends on the SAS/C compiler we used to build much of the Amiga platform.
 
 The only changes to the files are those needed to license the code under the Apache License.
 
@@ -38,11 +38,11 @@ Unfortunately, much of the RCS history in Enforcer is lost due to bugs in RCS an
 
 ## Why?
 
-> In recogrnition of the continued interest in the Amiga and the amazing group of people keeping this wonderful retro computing platform alive, having the code around and potentially enhanced by those is something I can do for the community.  Having worked on and developed parts of the Amiga, that time of my life was very special and produced live long friends and family.
+> In recognition of the continued interest in the Amiga and the amazing group of people keeping this wonderful retro computing platform alive, having the code around and potentially enhanced by those is something I can do for the community.  Having worked on and developed parts of the Amiga, that time of my life was very special and produced life-long friends and family.
 >
 > I had put up, a long time ago, some pages on my web site, about Enforcer but over the decades, I have not had time (or hardware) to do much more with this, even though I still have great love for the Amiga.
 >
-> I hope that his provides a way for the legacy of the Amiga and Enforcer's role on the Amiga, to continue to live.
+> I hope that this provides a way for the legacy of the Amiga and Enforcer's role on the Amiga, to continue to live.
 >
 > -- Michael sinz
 ![My Amiga Checkmark as rendered on an Amiga with a 2-bit plane display (yes, only 2 bits per pixel)](Checkmark.gif)
